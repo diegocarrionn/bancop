@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.ClienteEntity;
 import com.example.demo.entity.CuentasEntity;
 import com.example.demo.repository.CuentasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +20,25 @@ public class CuentasServiceImpl implements iCuentasService{
     }
 
     @Override
+    public CuentasEntity buscarUnaCuenta(Integer cuentaId) {
+        return this.repository.findById(String.valueOf(cuentaId)).get();
+    }
+
+    @Override
     public CuentasEntity crearCuenta(CuentasEntity cuenta) {
-        return null;
+        cuenta.setCuentaId(cuenta.getCuentaId());
+        cuenta.setClienteId(cuenta.getClienteId());
+        cuenta.setNumeroCuenta(cuenta.getNumeroCuenta());
+        cuenta.setTipoCuenta(cuenta.getTipoCuenta());
+        cuenta.setSaldoInicial(cuenta.getSaldoInicial());
+        cuenta.setEstadoCuenta(cuenta.getEstadoCuenta());
+        return this.repository.save(cuenta);
+
     }
 
     @Override
-    public CuentasEntity modificarCuenta(CuentasEntity cuenta) {
-        return null;
-    }
+    public CuentasEntity modificarCuenta(CuentasEntity cuenta) { return this.repository.save(cuenta);  }
 
     @Override
-    public CuentasEntity buscarCuenta(Integer cuentaId) {
-        return null;
-    }
-
-    @Override
-    public void eliminarCuenta(Integer cuentaId) {
-
-    }
+    public void eliminarCuenta(Integer cuentaId) { this.repository.deleteById(String.valueOf(cuentaId)); }
 }

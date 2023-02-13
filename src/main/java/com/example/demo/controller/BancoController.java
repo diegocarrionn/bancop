@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ClienteEntity;
 import com.example.demo.entity.CuentasEntity;
+import com.example.demo.repository.CuentasRepository;
 import com.example.demo.service.ClienteServiceImpl;
 import com.example.demo.service.CuentasServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class BancoController {
     }
 
     @GetMapping(path = "/api/clientes/{clienteId}")
-    public ResponseEntity<?> buscarCliente(@PathVariable Integer clienteId){
-        ClienteEntity cliente = this.clienteService.buscarCliente(clienteId);
+    public ResponseEntity<?> buscarUnCliente(@PathVariable Integer clienteId){
+        ClienteEntity cliente = this.clienteService.buscarUnCliente(clienteId);
         return ResponseEntity.ok(cliente);
     }
 
@@ -64,6 +65,30 @@ public class BancoController {
     public ResponseEntity<?> consultarCuentas(){
         List<CuentasEntity> listaCuentas = this.cuentasService.consultarCuentas();
         return ResponseEntity.ok(listaCuentas);
+    }
+
+    @GetMapping(path = "/api/cuentas/{cuentaId}")
+    public ResponseEntity<?> buscarUnaCuenta(@PathVariable Integer cuentaId){
+        CuentasEntity cuenta = this.cuentasService.buscarUnaCuenta(cuentaId);
+        return ResponseEntity.ok(cuenta);
+    }
+
+    @PostMapping(path = "/api/cuentas/crear")
+    public ResponseEntity<?> crearCuenta(@RequestBody CuentasEntity cuenta){
+        CuentasEntity entity = this.cuentasService.crearCuenta(cuenta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+    }
+
+    @PutMapping(path = "/api/cuentas/modificar")
+    public ResponseEntity<?> modificarCuenta(@RequestBody CuentasEntity cuenta){
+        CuentasEntity entity = this.cuentasService.modificarCuenta(cuenta);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+    }
+
+    @DeleteMapping(path = "/api/cuentas/eliminar/{cuentaId}")
+    public ResponseEntity<?> eliminarCuenta(@PathVariable Integer cuentaId){
+        this.cuentasService.eliminarCuenta(cuentaId);
+        return ResponseEntity.ok().build();
     }
 
 }

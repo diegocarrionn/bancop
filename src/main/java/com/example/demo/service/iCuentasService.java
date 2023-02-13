@@ -12,7 +12,7 @@ public interface iCuentasService {
 
     public CuentasEntity modificarCuenta(CuentasEntity cuenta);
 
-    public CuentasEntity buscarCuenta(Integer cuentaId);
+    public CuentasEntity buscarUnaCuenta(Integer cuentaId);
 
     public void eliminarCuenta(Integer cuentaId);
 }

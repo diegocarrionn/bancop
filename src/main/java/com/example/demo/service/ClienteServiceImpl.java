@@ -18,6 +18,11 @@ public class ClienteServiceImpl implements iClienteService{
     }
 
     @Override
+    public ClienteEntity buscarUnCliente(Integer clienteId) {
+        return this.repository.findById(String.valueOf(clienteId)).get();
+    }
+
+    @Override
     public ClienteEntity crearCliente(ClienteEntity cliente) {
         cliente.setClienteId(cliente.getClienteId());
         cliente.setClave(cliente.getClave());
@@ -28,11 +33,6 @@ public class ClienteServiceImpl implements iClienteService{
     @Override
     public ClienteEntity modificarCliente(ClienteEntity cliente) {
         return this.repository.save(cliente);
-    }
-
-    @Override
-    public ClienteEntity buscarCliente(Integer clienteId) {
-        return this.repository.findById(String.valueOf(clienteId)).get();
     }
 
     @Override
