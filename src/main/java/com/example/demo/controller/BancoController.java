@@ -2,9 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.ClienteEntity;
 import com.example.demo.entity.CuentasEntity;
-import com.example.demo.repository.CuentasRepository;
+import com.example.demo.entity.MovimientosEntity;
 import com.example.demo.service.ClienteServiceImpl;
 import com.example.demo.service.CuentasServiceImpl;
+import com.example.demo.service.MovimientosServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,9 @@ public class BancoController {
 
     @Autowired
     private CuentasServiceImpl cuentasService;
+
+    @Autowired
+    private MovimientosServiceImpl movimientosService;
 
     @GetMapping(path = "/api/clientes")
     public ResponseEntity<?> consultarClientes(){
@@ -88,6 +92,36 @@ public class BancoController {
     @DeleteMapping(path = "/api/cuentas/eliminar/{cuentaId}")
     public ResponseEntity<?> eliminarCuenta(@PathVariable Integer cuentaId){
         this.cuentasService.eliminarCuenta(cuentaId);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping(path = "/api/movimientos")
+    public ResponseEntity<?> consultarMovs(){
+        List<MovimientosEntity> listaMovs = this.movimientosService.consultarMovs();
+        return ResponseEntity.ok(listaMovs);
+    }
+
+    @GetMapping(path = "/api/movimientos/{movId}")
+    public ResponseEntity<?> buscarUnMov(@PathVariable Integer movId){
+        MovimientosEntity mov = this.movimientosService.buscarUnMov(movId);
+        return ResponseEntity.ok(mov);
+    }
+
+    @PostMapping(path = "/api/movimientos/crear")
+    public ResponseEntity<?> crearMov(@RequestBody MovimientosEntity mov){
+        MovimientosEntity entity = this.movimientosService.crearMov(mov);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+    }
+
+    @PutMapping(path = "/api/movimientos/modificar")
+    public ResponseEntity<?> modificarMov(@RequestBody MovimientosEntity mov){
+        MovimientosEntity entity = this.movimientosService.modificarMov(mov);
+        return ResponseEntity.status(HttpStatus.CREATED).body(entity);
+    }
+
+    @DeleteMapping(path = "/api/movimientos/eliminar/{movId}")
+    public ResponseEntity<?> eliminarMov(@PathVariable Integer movId){
+        this.movimientosService.eliminarMov(movId);
         return ResponseEntity.ok().build();
     }
 
