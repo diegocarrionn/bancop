@@ -1,13 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.ClienteEntity;
+import com.example.demo.entity.CuentasEntity;
 import com.example.demo.service.ClienteServiceImpl;
+import com.example.demo.service.CuentasServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 @RestController
@@ -16,6 +19,9 @@ public class BancoController {
     static Logger logger = Logger.getLogger(BancoController.class.getName());
     @Autowired
     private ClienteServiceImpl clienteService;
+
+    @Autowired
+    private CuentasServiceImpl cuentasService;
 
     @GetMapping(path = "/api/clientes")
     public ResponseEntity<?> consultarClientes(){
@@ -46,4 +52,18 @@ public class BancoController {
         this.clienteService.eliminarCliente(clienteId);
         return ResponseEntity.ok().build();
     }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementFoundException(NoSuchElementException exception) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
+    }
+
+    @GetMapping(path = "/api/cuentas")
+    public ResponseEntity<?> consultarCuentas(){
+        List<CuentasEntity> listaCuentas = this.cuentasService.consultarCuentas();
+        return ResponseEntity.ok(listaCuentas);
+    }
+
 }

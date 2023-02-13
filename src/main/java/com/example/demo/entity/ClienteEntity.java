@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "cliente")
 public class ClienteEntity {
@@ -15,6 +17,16 @@ public class ClienteEntity {
 
     @Column(name = "estado")
     private Boolean estadoCliente;
+    /*
+    @OneToMany(mappedBy = "cliente")
+    List<CuentasEntity> cuentas;
+    */
+
+    /*public ClienteEntity(Integer clienteId, String clave, Boolean estadoCliente) {
+        this.clienteId = clienteId;
+        this.clave = clave;
+        this.estadoCliente = estadoCliente;
+    }*/
 
     public Integer getClienteId() {
         return clienteId;
