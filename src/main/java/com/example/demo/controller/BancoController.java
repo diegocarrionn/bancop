@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.ClienteEntity;
 import com.example.demo.entity.CuentasEntity;
 import com.example.demo.entity.MovimientosEntity;
+import com.example.demo.repository.MovimientosRepository;
 import com.example.demo.service.ClienteServiceImpl;
 import com.example.demo.service.CuentasServiceImpl;
 import com.example.demo.service.MovimientosServiceImpl;
@@ -27,6 +28,9 @@ public class BancoController {
 
     @Autowired
     private MovimientosServiceImpl movimientosService;
+
+    @Autowired
+    private MovimientosRepository repository;
 
     @GetMapping(path = "/api/clientes")
     public ResponseEntity<?> consultarClientes(){
@@ -105,6 +109,11 @@ public class BancoController {
     public ResponseEntity<?> buscarUnMov(@PathVariable Integer movId){
         MovimientosEntity mov = this.movimientosService.buscarUnMov(movId);
         return ResponseEntity.ok(mov);
+    }
+
+    @GetMapping(path = "/api/movimientos/cuenta")
+    public ResponseEntity<List<MovimientosEntity>> buscarMovsCta(@RequestParam Integer cuentaId){
+        return new ResponseEntity<>(repository.findByCuentaId(cuentaId), HttpStatus.OK);
     }
 
     @PostMapping(path = "/api/movimientos/crear")

@@ -18,7 +18,7 @@ public class MovimientosServiceImpl implements iMovimientosService {
 
     @Override
     public MovimientosEntity buscarUnMov(Integer movId) {
-        return this.repository.findById(String.valueOf(movId)).get();
+        return this.repository.findById(movId).get();
     }
 
     @Override
@@ -36,5 +36,5 @@ public class MovimientosServiceImpl implements iMovimientosService {
     public MovimientosEntity modificarMov(MovimientosEntity mov) { return this.repository.save(mov); }
 
     @Override
-    public void eliminarMov(Integer movId) { this.repository.deleteById(String.valueOf(movId)); }
+    public void eliminarMov(Integer movId) { this.repository.deleteById(movId); }
 }
